@@ -2,7 +2,7 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 const marked = require('marked')
-const {remote} = require('electron')
+const {remote,ipcRenderer} = require('electron')
 const mainProcess = remote.require('./main.js')
 const markdownView = document.querySelector('#markdown');
 const htmlView = document.querySelector('#html')
@@ -23,4 +23,10 @@ markdownView.addEventListener('keyup',(event)=>{
 })
 openButton.addEventListener("click",(event)=>{
     mainProcess.getFileFromUser()
+})
+ipcRenderer.on('file-opened',(event,file,content)=>{
+    markdownView.value = content
+    renderMarkdownToHtml(content)
+    alert('you select file path is ' + file)
+
 })

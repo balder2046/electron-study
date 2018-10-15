@@ -8,12 +8,12 @@ let mainWindow
 const getFileFromUser = exports.getFileFromUser = ()=>{
   
   const files = dialog.showOpenDialog(mainWindow,{properties:['openFile'],
-  filters:[{name:"text files",extensions:["txt"]},{name:"all files",extensions:["*"]}]}
+  filters:[{name:"markdonw files",extensions:["md"]},{name:"all files",extensions:["*"]}]}
   )
   if (!files) return;
   const file  = files[0]
   const content = fs.readFileSync(file).toString();
-  console.log(content)
+  mainWindow.webContents.send("file-opened",file,content)
 }
 
 function createWindow () {
