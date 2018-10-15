@@ -2,15 +2,27 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Mark Down Editor</title>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
   </head>
   <body>
-    <h1>Hello World!</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <section class="controls">
+      <button id="new-file">New File</button>
+      <button id="open-file">Open File</button>
+      <button id="save-markdown" disabled>Save File</button>
+      <button id="revert" disabled>Revert</button>
+      <button id="save-html">Save HTML</button>
+      <button id="show-file" disabled>Show File</button>
+      <button id="open-in-default" disabled>Open In Default Application</button>
+    </section>
+    <section class="content">
+      <label for="markdown" hidden>Markdown content</label>
+      <textarea class="raw-markdown" id="markdown"></textarea>
+      <div class="rendered-html" id="html"></div>
 
+    </section>
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
