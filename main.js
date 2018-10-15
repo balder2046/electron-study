@@ -21,7 +21,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600,title:"Mark Down Editor",show:false})
 
-getFileFromUser()
+
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
