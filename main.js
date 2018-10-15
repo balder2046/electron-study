@@ -1,15 +1,30 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow,dialog} = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+const getFileFromUser = ()=>{
+  
+  const files = dialog.showOpenDialog(mainWindow,{properties:['openFile'],
+  filters:[{name:"text files",extensions:["txt"]},{name:"all files",extensions:["*"]}]}
+  )
+  if (!files) return;
+  const count =  files.length
+  for (var i = 0; i < count; ++i){
+    const name = files[i]
+   
+  }
+
+}
+
 function createWindow () {
+  console.log('hello wolrd')
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600,title:"Mark Down Editor",show:false})
 
-
+getFileFromUser()
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
@@ -19,6 +34,7 @@ function createWindow () {
 
   mainWindow.once('ready-to-show',()=>{
     mainWindow.show()
+    //getFileFromUser()
   })
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
