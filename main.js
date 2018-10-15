@@ -1,6 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow,dialog} = require('electron')
-
+const fs = require('fs')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -11,12 +11,9 @@ const getFileFromUser = ()=>{
   filters:[{name:"text files",extensions:["txt"]},{name:"all files",extensions:["*"]}]}
   )
   if (!files) return;
-  const count =  files.length
-  for (var i = 0; i < count; ++i){
-    const name = files[i]
-   
-  }
-
+  const file  = files[0]
+  const content = fs.readFileSync(file).toString();
+  console.log(content)
 }
 
 function createWindow () {
