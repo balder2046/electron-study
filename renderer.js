@@ -2,6 +2,8 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 const marked = require('marked')
+const {remote} = require('electron')
+const mainProcess = remote.require('./main.js')
 const markdownView = document.querySelector('#markdown');
 const htmlView = document.querySelector('#html')
 const newButton = document.querySelector('#new-file')
@@ -18,4 +20,7 @@ const renderMarkdownToHtml = (markdown)=>{
 }
 markdownView.addEventListener('keyup',(event)=>{
     renderMarkdownToHtml(event.target.value)
+})
+openButton.addEventListener("click",(event)=>{
+    mainProcess.getFileFromUser()
 })

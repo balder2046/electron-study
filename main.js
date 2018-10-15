@@ -5,7 +5,7 @@ const fs = require('fs')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-const getFileFromUser = ()=>{
+const getFileFromUser = exports.getFileFromUser = ()=>{
   
   const files = dialog.showOpenDialog(mainWindow,{properties:['openFile'],
   filters:[{name:"text files",extensions:["txt"]},{name:"all files",extensions:["*"]}]}
