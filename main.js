@@ -5,6 +5,13 @@ const fs = require('fs')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 const windows = new Set()
+
+const openFile = (file,targetWindow)=>{
+  const content = fs.readFileSync(file).toString();
+  app.addRecentDocument(file)
+  targetWindow.setRepresentedFilename(file)
+  targetWindow.webContents.send("file-opened",file,content)
+}
 const getFileFromUser = exports.getFileFromUser = (targetWindow)=>{
   
   const files = dialog.showOpenDialog(mainWindow,{properties:['openFile'],
@@ -12,10 +19,7 @@ const getFileFromUser = exports.getFileFromUser = (targetWindow)=>{
   )
   if (!files) return;
   const file  = files[0]
-  const content = fs.readFileSync(file).toString();
-  app.addRecentDocument(file)
-  targetWindow.setRepresentedFilename(file)
-  targetWindow.webContents.send("file-opened",file,content)
+  openFile(file,targetWindow)
 }
 
 const createWindow = exports.createWindow = () => {
@@ -60,6 +64,18 @@ const createWindow = exports.createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', ()=>{createWindow()})
+
+app.on('will-finish-launching',()=>{
+  app.on('open-file',(event,file)=>{
+    const win = createWindow()
+    win.once('ready-to-show',(event)=>{
+      openFile(file,win)
+    })
+    
+  })
+  
+
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
