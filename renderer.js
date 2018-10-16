@@ -30,6 +30,8 @@ const updateUserInterface = (isEdited)=>{
     }
     currentWindow.setTitle(title)
     currentWindow.setDocumentEdited(isEdited)
+    revertButton.disabled = !isEdited
+    saveMarkdownButton.disabled = !isEdited
     
 }
 markdownView.addEventListener('keyup',(event)=>{
