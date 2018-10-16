@@ -46,6 +46,10 @@ openButton.addEventListener("click",(event)=>{
 newButton.addEventListener('click',(event)=>{
     mainProcess.createWindow()
 })
+saveHtmlButton.addEventListener('click',(event)=>{
+    const content = htmlView.innerHTML
+    mainProcess.saveHTML(currentWindow,content)
+})
 ipcRenderer.on('file-opened',(event,file,content)=>{
     
     filePath = file

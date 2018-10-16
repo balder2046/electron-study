@@ -22,6 +22,20 @@ const getFileFromUser = exports.getFileFromUser = (targetWindow)=>{
   openFile(file,targetWindow)
 }
 
+// Save HTML
+const saveHTML = exports.saveHTML = (targetWindow,content) =>{
+  const file = dialog.showSaveDialog(targetWindow,{title:"Export To HTML",defaultPath:app.getAppPath('documents'),
+  filters:[{name:"HTML files",extensions:["html","htm"]}]})
+  let success = false
+  if (file)
+  {
+    fs.writeFileSync(file,content)
+    success = true
+  }
+  targetWindow.webContents.send("export-html",success)
+
+}
+
 const createWindow = exports.createWindow = () => {
   let x,y;
   let currentWindow = BrowserWindow.getFocusedWindow()
