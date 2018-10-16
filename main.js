@@ -17,9 +17,15 @@ const getFileFromUser = exports.getFileFromUser = (targetWindow)=>{
 }
 
 const createWindow = exports.createWindow = () => {
-  
+  let x,y;
+  let currentWindow = BrowserWindow.getFocusedWindow()
+  if (currentWindow){
+    const [currentX,currentY] = currentWindow.getPosition()
+    x = currentX + 50
+    y = currentY + 50
+  }
   // Create the browser window.
-  let newWindow = new BrowserWindow({width: 800, height: 600,title:"Mark Down Editor",show:false})
+  let newWindow = new BrowserWindow({x,y,width: 800, height: 600,title:"Mark Down Editor",show:false})
 
 
 
