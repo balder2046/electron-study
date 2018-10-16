@@ -13,6 +13,7 @@ const getFileFromUser = exports.getFileFromUser = (targetWindow)=>{
   if (!files) return;
   const file  = files[0]
   const content = fs.readFileSync(file).toString();
+  targetWindow.setRepresentedFilename(file)
   targetWindow.webContents.send("file-opened",file,content)
 }
 
