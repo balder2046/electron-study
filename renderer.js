@@ -22,16 +22,21 @@ const renderMarkdownToHtml = (markdown)=>{
     htmlView.innerHTML = marked(markdown,{sanitize:true})
     
 }
-const updateUserInterface = ()=>{
+const updateUserInterface = (isEdited)=>{
     let title = 'fire sale'
     if (filePath){
         title = `${path.basename(filePath)} - ${title}`
+        if (isEdited) title = `${title} (Edited)`
     }
     currentWindow.setTitle(title)
+    currentWindow.setDocumentEdited(isEdited)
     
 }
 markdownView.addEventListener('keyup',(event)=>{
+    
     renderMarkdownToHtml(event.target.value)
+    updateUserInterface(event.target.value !== originalContent)
+    
 })
 openButton.addEventListener("click",(event)=>{
     mainProcess.getFileFromUser(currentWindow)
@@ -40,10 +45,11 @@ newButton.addEventListener('click',(event)=>{
     mainProcess.createWindow()
 })
 ipcRenderer.on('file-opened',(event,file,content)=>{
-    originalContent = content
+    
     filePath = file
     markdownView.value = content
+    originalContent = markdownView.value
     renderMarkdownToHtml(content)
-    updateUserInterface()
+    updateUserInterface(false)
 
 })
