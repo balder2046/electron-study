@@ -22,10 +22,10 @@ const renderMarkdownToHtml = (markdown)=>{
     htmlView.innerHTML = marked(markdown,{sanitize:true})
     
 }
-const updateUserInterface = (filename)=>{
+const updateUserInterface = ()=>{
     let title = 'fire sale'
-    if (filename){
-        title = `${path.basename(filename)} - ${title}`
+    if (filePath){
+        title = `${path.basename(filePath)} - ${title}`
     }
     currentWindow.setTitle(title)
     
@@ -44,6 +44,6 @@ ipcRenderer.on('file-opened',(event,file,content)=>{
     filePath = file
     markdownView.value = content
     renderMarkdownToHtml(content)
-    updateUserInterface(file)
+    updateUserInterface()
 
 })
