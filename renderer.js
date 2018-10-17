@@ -50,6 +50,11 @@ saveHtmlButton.addEventListener('click',(event)=>{
     const content = htmlView.innerHTML
     mainProcess.saveHTML(currentWindow,content)
 })
+saveMarkdownButton.addEventListener('click',(event)=>{
+    const content = markdownView.value
+    mainProcess.saveMarkdown(currentWindow,filePath,content)
+
+})
 ipcRenderer.on('file-opened',(event,file,content)=>{
     
     filePath = file

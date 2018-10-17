@@ -36,6 +36,26 @@ const saveHTML = exports.saveHTML = (targetWindow,content) =>{
 
 }
 
+// SaveMarkdown
+const saveMarkdown = exports.saveMarkdown = (targetWindow,file,content)=>{
+  if (!file)
+  {
+    file = dialog.showSaveDialog(targetWindow,{
+      title:"Save Markdown", 
+        defaultPath:app.getPath('documents'),
+        filters:[{name:"Marddown files",extensions:["md","markdown"]}]
+    })
+  }
+  
+  let success = false
+  if (file)
+  {
+    fs.writeFileSync(file,content)
+    success = true
+    openFile(file,targetWindow)
+  }
+}
+
 const createWindow = exports.createWindow = () => {
   let x,y;
   let currentWindow = BrowserWindow.getFocusedWindow()
