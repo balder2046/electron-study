@@ -24,7 +24,7 @@ const getFileFromUser = exports.getFileFromUser = (targetWindow)=>{
 
 // Save HTML
 const saveHTML = exports.saveHTML = (targetWindow,content) =>{
-  const file = dialog.showSaveDialog(targetWindow,{title:"Export To HTML",defaultPath:app.getAppPath('documents'),
+  const file = dialog.showSaveDialog(targetWindow,{title:"Export To HTML",defaultPath:app.getPath('documents'),
   filters:[{name:"HTML files",extensions:["html","htm"]}]})
   let success = false
   if (file)
