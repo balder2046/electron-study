@@ -24,7 +24,7 @@ const getFileFromUser = exports.getFileFromUser = (targetWindow)=>{
 
 // Save HTML
 const saveHTML = exports.saveHTML = (targetWindow,content) =>{
-  const file = dialog.showSaveDialog(targetWindow,{title:"Export To HTML",defaultPath:app.getAppPath('documents'),
+  const file = dialog.showSaveDialog(targetWindow,{title:"Export To HTML",defaultPath:app.getPath('documents'),
   filters:[{name:"HTML files",extensions:["html","htm"]}]})
   let success = false
   if (file)
@@ -79,7 +79,23 @@ const createWindow = exports.createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', ()=>{createWindow()})
 
+const logPath = (name)=>{
+  console.log(name + " : " + app.getPath(name))
+}
 app.on('will-finish-launching',()=>{
+
+  // show some document path
+  
+  logPath('documents')
+  logPath('home')
+  logPath('temp')
+  logPath('downloads')
+  logPath('pictures')
+  logPath('music')
+  logPath('videos')
+  logPath('exe')
+  logPath('appData')
+  logPath('userData')
   app.on('open-file',(event,file)=>{
     const win = createWindow()
     win.once('ready-to-show',(event)=>{
