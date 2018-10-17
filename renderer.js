@@ -17,6 +17,10 @@ const showFileButton = document.querySelector('#show-file')
 const openInDefaultButton = document.querySelector('#open-in-default')
 let filePath = null
 let originalContent = ''
+
+
+
+
 const renderMarkdownToHtml = (markdown)=>{
     
     htmlView.innerHTML = marked(markdown,{sanitize:true})
@@ -34,6 +38,59 @@ const updateUserInterface = (isEdited)=>{
     saveMarkdownButton.disabled = !isEdited
     
 }
+
+function preventEventDefault(event){
+    event.preventDefault()
+}
+
+// drag functions
+document.addEventListener('dragstart',preventEventDefault)
+document.addEventListener('dragover', preventEventDefault)
+document.addEventListener('dragleave',preventEventDefault)
+document.addEventListener('drop',preventEventDefault)
+
+const getDraggedFile = (event)=>{
+    return event.dataTransfer.items[0]
+}
+const getDroppedFile = (event)=>{
+    return event.dataTransfer.files[0]
+}
+const fileTypeIsSupported = (file)=>{
+    return ['text/plain','text/markdown'].includes(file.type)
+}
+
+markdownView.addEventListener('dragover',(event)=>{
+    const file = getDraggedFile(event)
+    console.log(file)
+    if (fileTypeIsSupported(file))
+    {
+        markdownView.classList.add('drag-over')
+    }
+    else{
+        markdownView.classList.add('drag-error')
+    }
+})
+markdownView.addEventListener('dragleave',(event)=>{
+    markdownView.classList.remove('drag-over')
+    markdownView.classList.remove('drag-error')
+})
+markdownView.addEventListener('dragexit',(event)=>{
+    markdownView.classList.remove('drag-over')
+    markdownView.classList.remove('drag-error')
+})
+
+markdownView.addEventListener('drop',(event)=>{
+    const file = getDroppedFile(event)
+    console.log(file.type)
+    if (fileTypeIsSupported(file))
+    {
+        mainProcess.openFile(file,currentwindow)
+    }
+    else
+    {
+        alert("not support filetype")
+    }
+})
 markdownView.addEventListener('keyup',(event)=>{
     
     renderMarkdownToHtml(event.target.value)

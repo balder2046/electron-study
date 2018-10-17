@@ -6,7 +6,7 @@ const fs = require('fs')
 let mainWindow
 const windows = new Set()
 
-const openFile = (file,targetWindow)=>{
+const openFile = exports.openFile = (file,targetWindow)=>{
   const content = fs.readFileSync(file).toString();
   app.addRecentDocument(file)
   targetWindow.setRepresentedFilename(file)
