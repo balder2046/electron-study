@@ -55,6 +55,10 @@ saveMarkdownButton.addEventListener('click',(event)=>{
     mainProcess.saveMarkdown(currentWindow,filePath,content)
 
 })
+revertButton.addEventListener('click',(event)=>{
+    markdownView.value = originalContent
+    renderMarkdownToHtml(originalContent)
+})
 ipcRenderer.on('file-opened',(event,file,content)=>{
     
     filePath = file
